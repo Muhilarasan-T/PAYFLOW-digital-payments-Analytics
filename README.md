@@ -2,9 +2,9 @@
 
 [![Dataset: RBI Payment System Indicators](https://img.shields.io/badge/Data_Source-Reserve_Bank_of_India-1f425f.svg)](https://dbie.rbi.org.in/)
 [![Time Horizon: Nov 2019 – Jul 2026](https://img.shields.io/badge/Time_Horizon-Nov_2019_--_Jul_2026_(81_Months)-orange.svg)](docs/dataset_audit.md)
-[![Status: Phase 3 Completed](https://img.shields.io/badge/Project_Status-Phase_3_Completed-green.svg)](#project-roadmap)
+[![Status: Phase 4 Completed](https://img.shields.io/badge/Project_Status-Phase_4_Completed-green.svg)](#project-roadmap)
 [![Database: MySQL 8.0 Star Schema](https://img.shields.io/badge/Database-MySQL_8.0_Star_Schema-blue.svg)](sql/02_create_tables.sql)
-[![Automated Tests](https://img.shields.io/badge/Tests-13%2F13_Passed_(pytest)-brightgreen.svg)](tests/test_cleaning.py)
+[![Automated Tests](https://img.shields.io/badge/Tests-21%2F21_Passed_(pytest)-brightgreen.svg)](tests/test_phase4_eda.py)
 
 ---
 
@@ -62,12 +62,14 @@ PAYFLOW/
 │       ├── cleaning_exceptions.csv          # Register of all 36 flagged anomalies & imputations
 │       ├── cleaning_exceptions.parquet      # High-performance columnar version
 │       └── payflow.db                       # Embedded SQLite analytical mirror database
-├── src/                            # Production ETL and data engineering scripts
+├── src/                            # Production ETL, database loader, and EDA analysis scripts
 │   ├── __init__.py
 │   ├── clean_data.py               # Automated ingestion, cleaning, and normalization pipeline
 │   ├── reconcile_check.py          # Standalone 22-rule reconciliation test script
 │   ├── load_data_to_mysql.py       # Star Schema loader for MySQL and analytical database
-│   └── run_analysis_queries.py     # SQL query execution and results harvesting engine
+│   ├── run_analysis_queries.py     # SQL query execution and results harvesting engine
+│   ├── phase4_eda.py               # Exploratory data analysis, statistical modeling & chart generation
+│   └── build_notebook.py           # Programmatic builder for reproducible Jupyter Notebook
 ├── sql/                            # Production MySQL 8.0 DDL, loaders, and queries
 │   ├── 01_create_database.sql      # Database creation and utf8mb4 collation setup
 │   ├── 02_create_tables.sql        # Star schema DDL with keys, constraints, and indexes
@@ -76,15 +78,19 @@ PAYFLOW/
 │   └── 05_business_analysis.sql    # 10 advanced business intelligence SQL queries
 ├── tests/                          # Automated test suites for validation & quality assurance
 │   ├── __init__.py
-│   └── test_cleaning.py            # 13 pytest suites validating data integrity & math reconciliations
+│   ├── test_cleaning.py            # 13 pytest suites validating data integrity & math reconciliations
+│   └── test_phase4_eda.py          # 8 pytest suites validating EDA aggregations, ratios & consistency
 ├── notebooks/                      # Jupyter notebooks for data cleaning, EDA, and modeling
+│   └── phase4_exploratory_data_analysis.ipynb # 11-stage comprehensive reproducible EDA notebook
 ├── excel/                          # Excel workbooks, dynamic pivot models, and dashboards
 ├── visuals/                        # Exported high-resolution charts, figures, and plots
+│   └── phase4/                     # 9 publication-grade 300 DPI exploratory analysis figures
 └── docs/                           # Documentation, data dictionaries, and audit reports
     ├── dataset_audit.md            # Comprehensive Phase 1 dataset audit report
     ├── phase2_cleaning_report.md   # Phase 2 cleaning methodology and anomaly resolutions
     ├── phase2_validation_report.md # Phase 2 mathematical reconciliation & test audit report
-    └── phase3_database_report.md   # Phase 3 database architecture, SQL queries, and results
+    ├── phase3_database_report.md   # Phase 3 database architecture, SQL queries, and results
+    └── phase4_eda_report.md        # Phase 4 exploratory data analysis & statistical findings report
 ```
 
 ---
@@ -191,15 +197,17 @@ The database layer implements an analytical **Star Schema** optimized for high-p
    ├── Execution of 10 advanced analytical business queries
    └── Phase 3 database engineering report (docs/phase3_database_report.md)
 
-[Phase 4] Exploratory Data Analysis & Python Modeling [NEXT]
-   ├── Statistical summaries & distribution analysis in Jupyter
-   ├── Time-series decomposition & seasonality indexing
-   └── Ticket-size correlation and growth trajectory modeling
+[Phase 4] Exploratory Data Analysis & Python Modeling [COMPLETED]
+   ├── 11-stage EDA pipeline in Jupyter (notebooks/phase4_exploratory_data_analysis.ipynb)
+   ├── 9 publication-grade 300 DPI visualizations (visuals/phase4/)
+   ├── Statistical decomposition, ATS polarization, card inversion & seasonality modeling
+   ├── Automated unit test suite (tests/test_phase4_eda.py — 8/8 passed, 21/21 total)
+   └── Comprehensive Phase 4 analytical report (docs/phase4_eda_report.md)
 
-[Phase 5] Data Visualization & Executive Reporting
-   ├── Publication-quality Seaborn & Matplotlib figures in visuals/
+[Phase 5] Data Visualization & Executive Reporting   [NEXT]
    ├── Interactive Excel analytical dashboard with dynamic slicers in excel/
-   └── Stakeholder-ready business intelligence presentation
+   ├── Executive summary workbook with automated KPIs and pivot models
+   └── Presentation-ready visual storytelling assets
 
 [Phase 6] Synthesis & Portfolio Finalization
    ├── Executive summary report

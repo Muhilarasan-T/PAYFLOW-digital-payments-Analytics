@@ -248,6 +248,6 @@ mysql -u root -p payflow_db < sql/05_business_analysis.sql
 ---
 
 ## 9. Author & Project Metadata
-- **Project Lead:** PAYFLOW Data Analytics Team
+- **Author:** Muhil Tamilarasan
 - **Specialization:** Digital Payments, Financial Technology (FinTech), Database Engineering & Business Intelligence
 - **Repository License:** Open Source for Educational and Portfolio Purposes

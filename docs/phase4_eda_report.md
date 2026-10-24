@@ -9,7 +9,7 @@
 - Analytical Script: [`src/phase4_eda.py`](file:///c:/Users/DELL/PAYFLOW/src/phase4_eda.py)  
 - Automated Test Suite: [`tests/test_phase4_eda.py`](file:///c:/Users/DELL/PAYFLOW/tests/test_phase4_eda.py)  
 - Visual Artifacts: 9 high-resolution figures in [`visuals/phase4/`](file:///c:/Users/DELL/PAYFLOW/visuals/phase4/)  
-**Author:** PAYFLOW Data Analytics Team  
+**Author:** Muhil Tamilarasan  
 **Date:** October 2026  
 **Status:** Completed & 100% Validated  
 

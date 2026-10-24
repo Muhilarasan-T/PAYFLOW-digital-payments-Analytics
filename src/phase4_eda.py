@@ -1,7 +1,7 @@
 """
 PAYFLOW — Phase 4: Exploratory Data Analysis & Analytical Visualizations
 ========================================================================
-Author: PAYFLOW Data Analytics Team
+Author: Muhil Tamilarasan
 Date: October 2026
 
 This module provides reusable analytical functions, statistical aggregations,
@@ -21,7 +21,13 @@ import pandas as pd
 import numpy as np
 
 import matplotlib
-matplotlib.use("Agg")  # Non-interactive headless backend
+if os.environ.get("MPLBACKEND") is None:
+    try:
+        from IPython import get_ipython
+        if get_ipython() is None:
+            matplotlib.use("Agg")
+    except ImportError:
+        matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import matplotlib.ticker as ticker

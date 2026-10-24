@@ -3,7 +3,7 @@
 **Project:** PAYFLOW — Digital Payments Intelligence & Trends Analysis  
 **Phase:** Phase 2 — Data Cleaning & Schema Normalization  
 **Pipeline Script:** [`src/clean_data.py`](file:///c:/Users/DELL/PAYFLOW/src/clean_data.py)  
-**Author:** PAYFLOW Data Analytics Team  
+**Author:** Muhil Tamilarasan  
 **Date:** October 2026  
 **Status:** Completed & Validated  
 

@@ -5,7 +5,7 @@
 **Database Schema:** `payflow_db` (Star Schema)  
 **Scripts Location:** [`sql/`](file:///c:/Users/DELL/PAYFLOW/sql/)  
 **Python Loader:** [`src/load_data_to_mysql.py`](file:///c:/Users/DELL/PAYFLOW/src/load_data_to_mysql.py)  
-**Author:** PAYFLOW Data Analytics Team  
+**Author:** Muhil Tamilarasan  
 **Date:** October 2026  
 **Status:** Completed & Validated  
 

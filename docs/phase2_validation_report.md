@@ -3,7 +3,7 @@
 **Project:** PAYFLOW — Digital Payments Intelligence & Trends Analysis  
 **Phase:** Phase 2 — Data Cleaning & Schema Normalization  
 **Test Suite:** [`tests/test_cleaning.py`](file:///c:/Users/DELL/PAYFLOW/tests/test_cleaning.py)  
-**Author:** PAYFLOW Data Analytics Team  
+**Author:** Muhil Tamilarasan  
 **Date:** October 2026  
 **Status:** 100% Passed (13/13 Test Suites)  
 

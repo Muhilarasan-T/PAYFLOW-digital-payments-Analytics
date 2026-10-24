@@ -15,7 +15,7 @@ cells.append(nbf.v4.new_markdown_cell("""# PAYFLOW — Phase 4: Exploratory Data
 **Project:** PAYFLOW — Digital Payments Intelligence & Trends Analysis  
 **Phase:** Phase 4 — Exploratory Data Analysis & Python Modeling  
 **Primary Dataset:** Reserve Bank of India (RBI) Payment System Indicators (Nov 2019 – Jul 2026)  
-**Author:** PAYFLOW Data Analytics Team  
+**Author:** Muhil Tamilarasan  
 **Date:** October 2026  
 
 ---
@@ -35,6 +35,15 @@ This notebook analyzes:
 
 # Cell 2: Imports & Environment Setup
 cells.append(nbf.v4.new_code_cell("""import os
+import sys
+from pathlib import Path
+
+# Automatically detect project root and add to sys.path
+project_root = Path.cwd().parent if Path.cwd().name == "notebooks" else Path.cwd()
+if str(project_root) not in sys.path:
+    sys.path.insert(0, str(project_root))
+os.chdir(project_root)
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -54,7 +63,7 @@ from src.phase4_eda import (
 )
 
 apply_chart_style()
-print("Libraries imported and styling applied successfully.")
+print("Libraries imported, working directory set to project root, and styling applied successfully.")
 """))
 
 # Cell 3: Data Ingestion & Profiling
@@ -93,10 +102,17 @@ cells.append(nbf.v4.new_code_cell("""df_share = get_upi_retail_share(df_trans)
 df_ann = get_annual_summary(df_trans)
 
 cols_to_show = ["year", "months_observed", "period_qualification", 
-                "annual_upi_vol_billions", "annual_retail_vol_billions", "upi_vol_share_pct",
-                "annual_upi_val_trillions", "annual_retail_val_trillions", "upi_val_share_pct"]
+                "upi_vol_billion", "retail_vol_billion", "upi_vol_share_pct",
+                "upi_val_trillion", "retail_val_trillion", "upi_val_share_pct"]
 
-df_ann[cols_to_show].round(2)
+df_ann[cols_to_show].round({
+    "upi_vol_billion": 2,
+    "retail_vol_billion": 2,
+    "upi_vol_share_pct": 2,
+    "upi_val_trillion": 2,
+    "retail_val_trillion": 2,
+    "upi_val_share_pct": 2
+})
 """))
 
 # Cell 5: Chart 1

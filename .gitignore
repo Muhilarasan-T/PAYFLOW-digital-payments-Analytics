@@ -34,6 +34,10 @@ desktop.ini
 *.sqlite
 *.sqlite3
 
+# Office / Excel temporary lock files
+~$*.xlsx
+~$*.xls
+
 # Intermediate scratch files
 *.tmp
 *.bak

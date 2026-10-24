@@ -2,8 +2,9 @@
 
 [![Dataset: RBI Payment System Indicators](https://img.shields.io/badge/Data_Source-Reserve_Bank_of_India-1f425f.svg)](https://dbie.rbi.org.in/)
 [![Time Horizon: Nov 2019 – Jul 2026](https://img.shields.io/badge/Time_Horizon-Nov_2019_--_Jul_2026_(81_Months)-orange.svg)](docs/dataset_audit.md)
-[![Status: Phase 1 Completed](https://img.shields.io/badge/Project_Status-Phase_1_Completed-green.svg)](#project-roadmap)
-[![Tech Stack](https://img.shields.io/badge/Tech_Stack-Python_|_MySQL_|_Excel_|_Jupyter_|_Seaborn-blue.svg)](#tech-stack)
+[![Status: Phase 2 Completed](https://img.shields.io/badge/Project_Status-Phase_2_Completed-green.svg)](#project-roadmap)
+[![Automated Tests](https://img.shields.io/badge/Tests-13%2F13_Passed_(pytest)-brightgreen.svg)](tests/test_cleaning.py)
+[![Tech Stack](https://img.shields.io/badge/Tech_Stack-Python_|_Pandas_|_PyArrow_|_MySQL_|_Excel_|_Jupyter-blue.svg)](#tech-stack)
 
 ---
 
@@ -21,7 +22,8 @@ The project demonstrates an end-to-end analytics workflow: from forensic dataset
 
 | Layer | Tools & Technologies | Purpose in PAYFLOW |
 | :--- | :--- | :--- |
-| **Language & Core Libraries** | Python 3.10+, Pandas, NumPy | Data ingestion, auditing, schema transformation, and feature engineering |
+| **Language & Core Libraries** | Python 3.10+, Pandas, NumPy, PyArrow | Data ingestion, auditing, schema transformation, and feature engineering |
+| **Testing & Quality Assurance** | Pytest (`tests/`) | Automated unit testing, reconciliation verification, and schema validation |
 | **Relational Database** | MySQL 8.0+ / SQL | Relational schema design, normalization, staging tables, and analytical window queries |
 | **Interactive Analytics** | Jupyter Notebook (`notebooks/`) | Step-by-step exploratory analysis, hypothesis validation, and reproducible pipelines |
 | **Spreadsheet Modeling** | Microsoft Excel (`excel/`) | Executive summaries, automated pivot tables, KPI cards, and dynamic slicers |
@@ -50,44 +52,42 @@ PAYFLOW/
 ├── data/
 │   ├── raw/                        # Immutable, untouched source data files
 │   │   └── 612--payment-system-indicators--new-format.csv
-│   └── processed/                  # Cleaned, normalized, and transformed analytical outputs
-│       └── .gitkeep
+│   └── processed/                  # Normalized, analysis-ready datasets (CSV & Parquet)
+│       ├── transaction_indicators.csv       # 57 payment rails, volumes, values, ticket sizes
+│       ├── transaction_indicators.parquet   # High-performance columnar version
+│       ├── infrastructure_indicators.csv    # 13 hardware touchpoint counts & audit flags
+│       ├── infrastructure_indicators.parquet# High-performance columnar version
+│       ├── data_dictionary.csv              # Full documentation of all 145 raw columns
+│       ├── data_dictionary.parquet          # High-performance columnar version
+│       ├── cleaning_exceptions.csv          # Register of all 36 flagged anomalies & imputations
+│       └── cleaning_exceptions.parquet      # High-performance columnar version
+├── src/                            # Production ETL and data engineering scripts
+│   ├── __init__.py
+│   ├── clean_data.py               # Automated ingestion, cleaning, and normalization pipeline
+│   └── reconcile_check.py          # Standalone 22-rule reconciliation test script
+├── tests/                          # Automated test suites for validation & quality assurance
+│   ├── __init__.py
+│   └── test_cleaning.py            # 13 pytest suites validating data integrity & math reconciliations
 ├── notebooks/                      # Jupyter notebooks for data cleaning, EDA, and modeling
-│       └── .gitkeep
 ├── sql/                            # MySQL DDL, schema definitions, and analytical queries
-│       └── .gitkeep
 ├── excel/                          # Excel workbooks, dynamic pivot models, and dashboards
-│       └── .gitkeep
 ├── visuals/                        # Exported high-resolution charts, figures, and plots
-│       └── .gitkeep
 └── docs/                           # Documentation, data dictionaries, and audit reports
     ├── dataset_audit.md            # Comprehensive Phase 1 dataset audit report
-    └── run_audit.py                # Standalone forensic validation script
+    ├── phase2_cleaning_report.md   # Phase 2 cleaning methodology and anomaly resolutions
+    └── phase2_validation_report.md # Phase 2 mathematical reconciliation & test audit report
 ```
 
 ---
 
-## 5. Dataset Summary at a Glance
+## 5. Processed Datasets at a Glance (Phase 2 Outputs)
 
-```
-┌────────────────────────────────────────────────────────────────────────┐
-│                        PAYFLOW DATASET AT A GLANCE                     │
-├──────────────────────────────┬─────────────────────────────────────────┤
-│ Metric                       │ Value                                   │
-├──────────────────────────────┼─────────────────────────────────────────┤
-│ Raw Matrix Dimensions        │ 94 rows × 145 columns                   │
-│ Data Time-Series Records     │ 81 consecutive months                   │
-│ Time Range                   │ November 2019 – July 2026               │
-│ Distinct Metric Pairs        │ 70 pairs (Volume in Lakh + Value in Cr) │
-│ Header Hierarchy Levels      │ 4 tiers (Section > Sub > Instrument > Unit)│
-│ Cell Population (Data Rows)  │ 11,340 cells evaluated                  │
-│ Empty Cells                  │ 0 (100% complete)                       │
-│ Numeric Float Values         │ 9,844 cells (86.8%)                     │
-│ Dash Placeholders (" -")     │ 1,105 cells (9.7% — Infrastructure/ECS) │
-│ Numeric Zeros                │ 391 cells (3.5%)                        │
-│ Duplicate Records            │ 0 (100% unique monthly timeline)        │
-└──────────────────────────────┴─────────────────────────────────────────┘
-```
+| Processed Dataset | Primary Records | Dimensions | File Formats | Description |
+| :--- | :---: | :---: | :---: | :--- |
+| **`transaction_indicators`** | **4,617 rows** ($57\text{ indicators} \times 81\text{ months}$) | 19 columns | CSV, Parquet | Monthly payment rail volume in Lakh, monetary value in ₹ Crores, and derived Average Ticket Size (ATS in INR). |
+| **`infrastructure_indicators`** | **1,053 rows** ($13\text{ indicators} \times 81\text{ months}$) | 18 columns | CSV, Parquet | Monthly active infrastructure counts (Cards in force, ATMs, PoS terminals, QR codes) with audit columns and anomaly flags. |
+| **`data_dictionary`** | **145 rows** (100% of raw source columns) | 16 columns | CSV, Parquet | Field-level catalog linking raw columns (`c1`–`c141`) to clean codes, hierarchy, units, and cleaning rules. |
+| **`cleaning_exceptions`** | **36 rows** | 12 columns | CSV, Parquet | Forensic register of all anomalies: 1 derived PPI imputation (`Sep-2023`), 10 pre-launch QR months, and 25 displaced `c141` values. |
 
 ---
 
@@ -97,10 +97,10 @@ PAYFLOW investigates realistic business intelligence questions grouped into eigh
 
 1. **UPI Exponential Dominance:** How did UPI scale from 1.22 billion monthly transactions (39.7% of retail volume) in Nov-2019 to 23.66 billion transactions (87.0% of retail volume) in Jul-2026?
 2. **Average Ticket Size (ATS) Polarization:** What is the ticket size trajectory of UPI ($\text{ATS} \approx ₹1,263$) versus NEFT ($\text{ATS} \approx ₹52,000$), IMPS ($\text{ATS} \approx ₹19,500$), and RTGS ($\text{ATS} \approx ₹6,140,000$)?
-3. **Credit vs. Debit Card Usage Dynamics:** Why has debit card spending stagnated despite ~1.03 billion active cards, while credit cards (~123 million cards) generate superior transaction value driven by e-commerce adoption?
+3. **Credit vs. Debit Card Usage Dynamics:** Why has debit card spending stalled despite $\sim 1.03\text{B}$ cards in force, while credit cards ($\sim 123\text{M}$ cards) generate superior transaction value driven by e-commerce adoption?
 4. **The Decline of Paper Clearing (CTS):** At what rate is physical cheque volume declining, and why has the average cheque size doubled as retail users abandon paper for digital channels?
 5. **Cash Withdrawal & ATM Utilization:** Are cash withdrawals at traditional ATMs declining, and what role are rural Micro-ATMs playing in cash-out accessibility?
-6. **Merchant Acceptance Infrastructure:** How has the deployment of physical PoS terminals (~10 million) compared against the explosion of low-cost static UPI QR codes (~803 million)?
+6. **Merchant Acceptance Infrastructure:** How has the deployment of physical PoS terminals ($\sim 10\text{M}$) scaled compared to asset-light static UPI QR codes ($\sim 803\text{M}$)?
 7. **Financial Inclusion Payment Rails:** What are the volume and value growth rates of Aadhaar Payment Bridge System (APBS) and AePS across rural banking corridors?
 8. **Macroeconomic Shocks & Festive Seasonality:** How did payments contract during the April–May 2020 COVID-19 lockdown, and how pronounced are festive season surges in October–November and fiscal year-end surges in March?
 
@@ -135,13 +135,15 @@ To ensure rigorous data integrity and avoid speculative modeling, PAYFLOW enforc
    ├── Comprehensive audit report (docs/dataset_audit.md)
    └── Initial project documentation (README.md)
 
-[Phase 2] Data Cleaning & Schema Transformation     [NEXT]
-   ├── Unpivot wide layout into clean relational tidy table
-   ├── Parse ISO dates (YYYY-MM-01) & standardize numeric fields
-   ├── Resolve data anomalies (Sep-2023 PPI imputation, infrastructure value drops)
-   └── Export to Parquet and CSV in data/processed/
+[Phase 2] Data Cleaning & Schema Normalization     [COMPLETED]
+   ├── Automated cleaning pipeline (src/clean_data.py)
+   ├── Separation of transaction and infrastructure tables
+   ├── Average ticket size derivation & anomaly resolutions
+   ├── Export of CSV and Parquet deliverables in data/processed/
+   ├── Automated test suite (tests/test_cleaning.py — 13/13 passed)
+   └── Cleaning & validation reports (docs/phase2_cleaning_report.md)
 
-[Phase 3] Database Engineering & SQL Modeling
+[Phase 3] Database Engineering & SQL Modeling      [NEXT]
    ├── Design normalized MySQL star schema (Fact + Dimensions)
    ├── Create DDL scripts & ingestion pipeline in sql/
    └── Author complex SQL queries (CAGR, rolling averages, market share)
@@ -164,22 +166,19 @@ To ensure rigorous data integrity and avoid speculative modeling, PAYFLOW enforc
 
 ---
 
-## 9. Reproducibility & How to Run
+## 9. Reproducibility & Automated Verification
 
 ### Prerequisites
 - Python 3.10+
 - Git
 
-### Setup Instructions
+### Execution Instructions
 ```bash
-# 1. Clone or navigate to the repository
-cd PAYFLOW
+# 1. Run the end-to-end data cleaning and normalization pipeline
+python src/clean_data.py
 
-# 2. Verify raw dataset presence
-python -c "import os; print('Dataset exists:', os.path.exists('data/raw/612--payment-system-indicators--new-format.csv'))"
-
-# 3. Run the automated forensic audit script
-python docs/run_audit.py
+# 2. Run the automated test suite to verify data integrity
+python -m pytest tests/test_cleaning.py -v
 ```
 
 ---

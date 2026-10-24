@@ -26,6 +26,9 @@ desktop.ini
 .vscode/
 .idea/
 
+# Testing & Cache
+.pytest_cache/
+
 # Intermediate scratch files
 *.tmp
 *.bak

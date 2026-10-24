@@ -1,6 +1,6 @@
 """
 PAYFLOW — Programmatic Jupyter Notebook Builder
-Builds notebooks/phase4_exploratory_data_analysis.ipynb using nbformat v4.
+Builds notebooks/exploratory_data_analysis.ipynb using nbformat v4.
 """
 
 import nbformat as nbf
@@ -10,10 +10,10 @@ nb = nbf.v4.new_notebook()
 cells = []
 
 # Title & Metadata
-cells.append(nbf.v4.new_markdown_cell("""# PAYFLOW — Phase 4: Exploratory Data Analysis & Insight Discovery
+cells.append(nbf.v4.new_markdown_cell("""# PAYFLOW — Exploratory Data Analysis & Insight Discovery
 
 **Project:** PAYFLOW — Digital Payments Intelligence & Trends Analysis  
-**Phase:** Phase 4 — Exploratory Data Analysis & Python Modeling  
+**Module:** Exploratory Data Analysis & Python Modeling  
 **Primary Dataset:** Reserve Bank of India (RBI) Payment System Indicators (Nov 2019 – Jul 2026)  
 **Author:** Muhil Tamilarasan  
 **Date:** October 2026  
@@ -22,7 +22,7 @@ cells.append(nbf.v4.new_markdown_cell("""# PAYFLOW — Phase 4: Exploratory Data
 
 ## 1. Executive Summary & Objective
 
-The objective of Phase 4 is to perform a rigorous, forensic Exploratory Data Analysis (EDA) on India's payment systems from **November 2019 to July 2026 (81 consecutive months)** using the cleaned and normalized datasets generated in Phase 2.
+The objective of this analysis is to perform a rigorous, forensic Exploratory Data Analysis (EDA) on India's payment systems from **November 2019 to July 2026 (81 consecutive months)** using the cleaned and normalized datasets.
 
 This notebook analyzes:
 1. **Data Profiling & Quality Audit:** Validating completeness, temporal continuity, and anomaly exclusions.
@@ -51,7 +51,7 @@ import matplotlib.dates as mdates
 import matplotlib.ticker as ticker
 import seaborn as sns
 
-from src.phase4_eda import (
+from src.eda_analysis import (
     load_cleaned_data,
     get_upi_retail_share,
     get_annual_summary,
@@ -70,7 +70,7 @@ print("Libraries imported, working directory set to project root, and styling ap
 cells.append(nbf.v4.new_markdown_cell("""---
 ## 2. Data Profile & Temporal Coverage
 
-We load the four processed deliverables from Phase 2:
+We load the four processed deliverables:
 - `data/processed/transaction_indicators.csv` (4,617 rows, 57 indicators)
 - `data/processed/infrastructure_indicators.csv` (1,053 rows, 13 indicators)
 - `data/processed/data_dictionary.csv` (145 columns documented)
@@ -266,11 +266,11 @@ cash_ann["avg_atm_withdrawal_inr"] = (cash_ann["atm_cash_val_cr"] * 100.0) / cas
 cash_ann[["atm_cash_val_cr", "digital_val_cr", "cash_to_digital_pct", "avg_atm_withdrawal_inr"]].round(2)
 """))
 
-# Cell 11: Validation vs Phase 3 SQL Results
+# Cell 11: Validation vs SQL Results
 cells.append(nbf.v4.new_markdown_cell("""---
 ## 8. Python-to-SQL Cross-Verification
 
-We cross-verify Python calculations against Phase 3 MySQL query results to guarantee mathematical reproducibility.
+We cross-verify Python calculations against relational database query results to guarantee mathematical reproducibility.
 """))
 
 cells.append(nbf.v4.new_code_cell("""import sqlite3
@@ -298,7 +298,7 @@ print("All SQL-to-Python cross-checks passed with 100% precision.")
 
 nb.cells = cells
 
-with open("notebooks/phase4_exploratory_data_analysis.ipynb", "w", encoding="utf-8") as f:
+with open("notebooks/exploratory_data_analysis.ipynb", "w", encoding="utf-8") as f:
     nbf.write(nb, f)
 
-print("Created notebooks/phase4_exploratory_data_analysis.ipynb successfully.")
+print("Created notebooks/exploratory_data_analysis.ipynb successfully.")

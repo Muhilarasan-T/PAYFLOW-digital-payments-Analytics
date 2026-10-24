@@ -1,6 +1,6 @@
 """
-PAYFLOW — Phase 2 Automated Test & Validation Suite
-===================================================
+PAYFLOW — Automated Data Integrity & Validation Test Suite
+===========================================================
 Tests dataset integrity, temporal continuity, indicator counts, schema types,
 ticket size arithmetic, anomaly handling, source traceability, and mathematical
 reconciliations against raw RBI source data.

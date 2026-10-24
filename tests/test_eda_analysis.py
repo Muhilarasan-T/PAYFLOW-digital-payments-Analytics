@@ -1,6 +1,6 @@
 """
-PAYFLOW — Phase 4 Analytical Verification & Automated Test Suite
-================================================================
+PAYFLOW — Analytical Verification & Automated Test Suite
+=========================================================
 Validates analytical correctness, market share bounds, unit conversions,
 growth rates on comparable periods, and Python-to-SQL consistency.
 """
@@ -11,7 +11,7 @@ import pandas as pd
 import numpy as np
 import pytest
 
-from src.phase4_eda import (
+from src.eda_analysis import (
     load_cleaned_data,
     get_upi_retail_share,
     get_annual_summary,
@@ -141,7 +141,7 @@ class TestInfrastructureAndCash:
 
 
 class TestPythonToSqlConsistency:
-    """Cross-verifies that Python calculations match Phase 3 SQL analytical query outputs."""
+    """Cross-verifies that Python calculations match SQL analytical query outputs."""
     
     def test_sql_python_consistency(self, eda_data):
         db_path = "data/processed/payflow.db"

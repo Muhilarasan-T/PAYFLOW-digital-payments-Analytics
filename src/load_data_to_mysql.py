@@ -1,7 +1,7 @@
 """
-PAYFLOW — Phase 3: Database Loader & SQL Execution Engine
-==========================================================
-Loads the processed Phase 2 CSV datasets into MySQL (when credentials are provided)
+PAYFLOW — Database Loader & SQL Execution Engine
+=================================================
+Loads processed CSV datasets into MySQL (when credentials are provided)
 and creates an embedded SQLite analytical database (data/processed/payflow.db)
 for immediate query execution, validation testing, and result reporting.
 """
@@ -118,7 +118,7 @@ def load_to_sqlite(db_path: str = "data/processed/payflow.db") -> sqlite3.Connec
     """Creates local SQLite database with full Star Schema for immediate verification."""
     print(f"\n[SQLite] Initializing analytical database at: {db_path}")
     
-    # Read Phase 2 processed CSVs
+    # Read processed CSVs
     df_trans = pd.read_csv("data/processed/transaction_indicators.csv")
     df_infra = pd.read_csv("data/processed/infrastructure_indicators.csv")
     df_dict = pd.read_csv("data/processed/data_dictionary.csv")

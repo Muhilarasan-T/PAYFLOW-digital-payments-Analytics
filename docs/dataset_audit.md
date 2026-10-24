@@ -1,7 +1,7 @@
 # PAYFLOW — Dataset Audit Report
 
 **Project:** PAYFLOW — Digital Payments Intelligence & Trends Analysis  
-**Phase:** Phase 1 — Dataset Audit & Project Setup  
+**Document:** Forensic Dataset Audit & Schema Specification  
 **Dataset:** Reserve Bank of India (RBI) Payment System Indicators (New Format)  
 **File Location:** [`data/raw/612--payment-system-indicators--new-format.csv`](file:///c:/Users/DELL/PAYFLOW/data/raw/612--payment-system-indicators--new-format.csv)  
 **Audit Date:** October 2026  
@@ -15,7 +15,7 @@ This audit report provides an exhaustive, forensic examination of the primary da
 
 The dataset captures the macro-level operational evolution of India's payment and settlement infrastructure across an uninterrupted **81-month time horizon from November 2019 to July 2026**. It contains monthly aggregate volumes and values across 70 distinct payment systems, clearing mechanisms, retail transfer rails, card payment channels, cash withdrawal points, and physical acceptance infrastructures.
 
-The file is an export of a multi-tiered spreadsheet report containing metadata wrapper columns, 4 hierarchical header levels, 81 data records, and regulatory explanatory footnotes. This audit defines the structural schema, validates data integrity, catalogues all indicators, establishes data quality anomalies, articulates viable business questions, outlines structural analytical boundaries, and lays the engineering groundwork for Phase 2 data cleaning and modeling.
+The file is an export of a multi-tiered spreadsheet report containing metadata wrapper columns, 4 hierarchical header levels, 81 data records, and regulatory explanatory footnotes. This audit defines the structural schema, validates data integrity, catalogues all indicators, establishes data quality anomalies, articulates viable business questions, outlines structural analytical boundaries, and lays the engineering groundwork for downstream data cleaning and modeling.
 
 ---
 
@@ -238,13 +238,13 @@ A thorough automated audit of all 11,340 data cells ($81\text{ rows} \times 140\
 > [!WARNING] Data Quality Anomalies Identified in Raw Dataset
 > 
 > 1. **Infrastructure Value Placeholders (`c117`–`c139`):**  
->    Because the source Excel table repeated `Value( Rupees Crores )` in Row 7 across the entire width, the infrastructure count metrics (e.g. Number of ATMs, Cards in force) were assigned adjacent "Value" columns. These are populated with `" -"` (or `0.00`). **Action in Phase 2:** Drop redundant even-indexed infrastructure value columns.
+>    Because the source Excel table repeated `Value( Rupees Crores )` in Row 7 across the entire width, the infrastructure count metrics (e.g. Number of ATMs, Cards in force) were assigned adjacent "Value" columns. These are populated with `" -"` (or `0.00`). **Action in Cleaning Pipeline:** Drop redundant even-indexed infrastructure value columns.
 > 
 > 2. **Displaced Data in `c141` (UPI QR Value Column):**  
 >    From `Jan-2024` through `Jan-2026`, column `c141` contains non-zero numeric figures (e.g., `3379.94` in Jan-2024, scaling to `7574.12` in Jan-2026). In contrast, prior to 2024 and after Jan-2026 it contains `" -"` or `0.00`. Inspection shows these numbers closely mirror the next month's UPI QR volume (`c140`). This indicates an uncorrected column displacement or cumulative adjustment in the upstream RBI reporting template.
 > 
 > 3. **Single Omission in `c64` (Prepaid Payment Instruments Volume - Sep-2023):**  
->    In Row 42 (`Sep-2023`), column `c64` (Total PPI Volume) contains `" -"`, while its constituent sub-channels contain valid numbers: Wallets `c66 = 4,927.10` Lakh and Cards `c68 = 1,216.07` Lakh (Sum = `6,143.17` Lakh). **Action in Phase 2:** Impute `c64` for Sep-2023 using the constituent sum.
+>    In Row 42 (`Sep-2023`), column `c64` (Total PPI Volume) contains `" -"`, while its constituent sub-channels contain valid numbers: Wallets `c66 = 4,927.10` Lakh and Cards `c68 = 1,216.07` Lakh (Sum = `6,143.17` Lakh). **Action in Cleaning Pipeline:** Impute `c64` for Sep-2023 using the constituent sum.
 > 
 > 4. **Structural Deprecation of ECS (`c28`, `c29`, `c44`, `c45`):**  
 >    Per RBI Footnote 2, Electronic Clearing Service (ECS Credit and Debit) was officially merged into NACH effective January 31, 2020. Post-January 2020, ECS volume and value drop to `0.00` or `" -"`. Any long-term direct debit analysis must treat NACH + ECS as a continuous lineage.
@@ -278,7 +278,7 @@ Using the available 141 columns and 81-month continuous sequence, PAYFLOW can ri
 ### Domain 1: The Exponential Ascent of UPI & Retail Payments Cannibalization
 - **Q1.1:** How rapidly did UPI expand its market share within total retail payments volume and value between Nov-2019 and Jul-2026?
 - **Q1.2:** At what inflection point did UPI overtake traditional card and netbanking channels in transaction volume?
-- **Q1.3:** Is UPI continuing to experience double-digit compound annual growth (CAGR), or has it entered an S-curve maturity phase?
+- **Q1.3:** Is UPI continuing to experience double-digit compound annual growth (CAGR), or has it entered an S-curve maturity stage?
 
 ### Domain 2: Average Ticket Size (ATS) Polarization
 - **Formula:** $\text{Average Ticket Size (INR)} = \frac{\text{Value in Rupees Crores} \times 10,000,000}{\text{Volume in Lakh} \times 100,000} = \frac{\text{Value}}{\text{Volume}} \times 100$
@@ -328,9 +328,9 @@ To maintain absolute data integrity and prevent speculative analysis, the follow
 
 ---
 
-## 9. Recommended Next Steps (Phase 2 Roadmap)
+## 9. Recommended Next Steps & Cleaning Architecture
 
-Based on the verified schema and data characteristics, the project will execute Phase 2 across the following milestones:
+Based on the verified schema and data characteristics, the project executes data cleaning and normalization across the following milestones:
 
 1. **Wide-to-Long Tidy Data Modeling (Python / Pandas):**
    - Transform the wide 145-column layout into a clean, normalized relational table.

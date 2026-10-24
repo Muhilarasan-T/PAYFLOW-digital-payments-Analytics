@@ -1,5 +1,5 @@
 -- ============================================================================
--- PAYFLOW — Phase 3: Database Engineering & SQL Modeling
+-- PAYFLOW — Database Engineering & SQL Modeling
 -- Script 05: Analytical Business Queries (10 Strategic Domains)
 -- Database: payflow_db
 -- Dialect: MySQL 8.0+

@@ -1,6 +1,6 @@
 """
-PAYFLOW — Phase 4: Exploratory Data Analysis & Analytical Visualizations
-========================================================================
+PAYFLOW — Exploratory Data Analysis & Analytical Visualizations
+================================================================
 Author: Muhil Tamilarasan
 Date: October 2026
 
@@ -11,7 +11,7 @@ transformation from November 2019 to July 2026.
 Key Functions:
   - load_cleaned_data(): Loads transaction and infrastructure tables.
   - run_all_eda(): Executes complete statistical analysis and exports charts.
-  - Chart generators for 9 publication-grade visual artifacts in visuals/phase4/.
+  - Chart generators for 9 publication-grade visual artifacts in visuals/.
 """
 
 import os
@@ -77,7 +77,7 @@ def apply_chart_style():
 # -----------------------------------------------------------------------------
 
 def load_cleaned_data(data_dir: str = "data/processed") -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame]:
-    """Loads all four Phase 2 deliverables and parses date columns."""
+    """Loads all four processed datasets and parses date columns."""
     trans_path = os.path.join(data_dir, "transaction_indicators.csv")
     infra_path = os.path.join(data_dir, "infrastructure_indicators.csv")
     dict_path = os.path.join(data_dir, "data_dictionary.csv")
@@ -215,7 +215,7 @@ def get_cash_vs_digital(df_trans: pd.DataFrame) -> pd.DataFrame:
 
 
 # -----------------------------------------------------------------------------
-# 3. Publication-Grade Visualization Generators (visuals/phase4/)
+# 3. Publication-Grade Visualization Generators (visuals/)
 # -----------------------------------------------------------------------------
 
 def plot_01_upi_share(df_share: pd.DataFrame, out_path: str):
@@ -562,10 +562,10 @@ def plot_09_seasonality_and_covid(df_share: pd.DataFrame, out_path: str):
 # 4. Master Orchestration Routine
 # -----------------------------------------------------------------------------
 
-def run_all_eda(visuals_dir: str = "visuals/phase4") -> Dict[str, Any]:
+def run_all_eda(visuals_dir: str = "visuals") -> Dict[str, Any]:
     """Orchestrates complete analytical workflow and saves all 9 visual artifacts."""
     print("=" * 80)
-    print("PAYFLOW — Phase 4: Exploratory Data Analysis Pipeline")
+    print("PAYFLOW — Exploratory Data Analysis Pipeline")
     print("=" * 80)
 
     os.makedirs(visuals_dir, exist_ok=True)
@@ -583,7 +583,7 @@ def run_all_eda(visuals_dir: str = "visuals/phase4") -> Dict[str, Any]:
     df_cash = get_cash_vs_digital(df_trans)
 
     # Generate Visuals
-    print("\nGenerating Publication-Quality Charts in visuals/phase4/:")
+    print("\nGenerating Publication-Quality Charts in visuals/:")
     plot_01_upi_share(df_share, os.path.join(visuals_dir, "01_upi_volume_value_share.png"))
     plot_02_monthly_upi_trends(df_share, os.path.join(visuals_dir, "02_monthly_upi_trends.png"))
     plot_03_ats_comparison(df_ats, os.path.join(visuals_dir, "03_payment_rail_ats_comparison.png"))

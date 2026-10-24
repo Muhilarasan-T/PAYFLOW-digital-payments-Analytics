@@ -1,6 +1,6 @@
 """
-PAYFLOW — Phase 2: Data Cleaning & Schema Normalization Pipeline
-================================================================
+PAYFLOW — Data Cleaning & Schema Normalization Pipeline
+========================================================
 This script ingests the raw, hierarchical Reserve Bank of India (RBI)
 Payment System Indicators CSV (Table 612, New Format), performs forensic
 parsing, standardizes dates and numeric datatypes, resolves known anomalies
@@ -1003,7 +1003,7 @@ def run_pipeline(raw_csv_path: str = "data/raw/612--payment-system-indicators--n
                  output_dir: str = "data/processed") -> Dict[str, Any]:
     
     print("=" * 80)
-    print("PAYFLOW — Phase 2: Data Cleaning & Normalization Pipeline")
+    print("PAYFLOW — Data Cleaning & Normalization Pipeline")
     print("=" * 80)
     
     if not os.path.exists(raw_csv_path):

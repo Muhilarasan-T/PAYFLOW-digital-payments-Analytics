@@ -1,5 +1,5 @@
 -- ============================================================================
--- PAYFLOW — Phase 3: Database Engineering & SQL Modeling
+-- PAYFLOW — Database Engineering & SQL Modeling
 -- Script 04: Data Quality Checks & Automated Validation Queries
 -- Database: payflow_db
 -- Dialect: MySQL 8.0+

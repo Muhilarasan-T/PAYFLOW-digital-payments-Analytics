@@ -1,4 +1,4 @@
-# PAYFLOW — Phase 6.1: Findings Synthesis & Business Recommendations
+# PAYFLOW — Findings Synthesis & Business Recommendations
 
 **Project:** PAYFLOW — Digital Payments Intelligence & Trends Analysis  
 **Deliverable:** Master Synthesis, Analytical Findings & Business Recommendations  
@@ -6,7 +6,7 @@
 **Primary Data Source:** [Reserve Bank of India (RBI) Database on Indian Economy (DBIE)](https://dbie.rbi.org.in/), Table No. 612: *Payment System Indicators (New Format)*  
 **Temporal Coverage:** November 2019 to July 2026 (81 consecutive monthly observations)  
 **Classification Coverage:** Five official digital/paper transaction categories and 13 physical/digital infrastructure indicators  
-**Analytical Pipeline:** Phases 1–5 (Forensic Audit, Tabular Cleaning & Schema Normalization, MySQL Star Schema Modeling, Python EDA, and Microsoft Excel Reporting)  
+**Analytical Pipeline:** End-to-End Analytics Workflow (Forensic Audit, Tabular Cleaning & Schema Normalization, MySQL Star Schema Modeling, Python EDA, and Microsoft Excel Reporting)  
 **Author:** Muhil Tamilarasan  
 **Date:** October 2026  
 **Status:** Completed & 100% Empirically Verified  
@@ -24,12 +24,12 @@ The project delivers an end-to-end data analytics workflow—spanning forensic r
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
 │                               PAYFLOW WORKFLOW ARCHITECTURE                            │
 ├─────────────────┬──────────────────────────────────────────────────────────────────────┤
-│ Phase 1: Audit  │ Forensic inspection of 94 rows × 145 cols; directory setup; nulls.   │
-│ Phase 2: Clean  │ Non-destructive ETL; split txns vs infra; ticket size math; Parquet. │
-│ Phase 3: SQL    │ MySQL 8.0 Star Schema (5 tables); DDL; automated QC; 10 CTE queries. │
-│ Phase 4: EDA    │ 11-stage Jupyter notebook; 9 publication charts (300 DPI); stats.    │
-│ Phase 5: Excel  │ Executive analytical workbook; KPI summaries; dynamic slicers.       │
-│ Phase 6: Synthesize│ Master findings synthesis; verified metrics; policy implications.   │
+│ 1. Audit        │ Forensic inspection of 94 rows × 145 cols; directory setup; nulls.   │
+│ 2. Clean        │ Non-destructive ETL; split txns vs infra; ticket size math; Parquet. │
+│ 3. SQL Modeling │ MySQL 8.0 Star Schema (5 tables); DDL; automated QC; 10 CTE queries. │
+│ 4. Python EDA   │ 11-stage Jupyter notebook; 9 publication charts (300 DPI); stats.    │
+│ 5. Excel Model  │ Executive analytical workbook; KPI summaries; dynamic slicers.       │
+│ 6. Synthesis    │ Master findings synthesis; verified metrics; policy implications.   │
 └─────────────────┴──────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -46,7 +46,7 @@ The analytical investigation is structured around six core empirical questions:
 
 ## 2. Seven Key Verified Findings
 
-All findings below are derived from verified database queries ([`sql/05_business_analysis.sql`](file:///c:/Users/DELL/PAYFLOW/sql/05_business_analysis.sql)), automated test assertions ([`tests/test_phase4_eda.py`](file:///c:/Users/DELL/PAYFLOW/tests/test_phase4_eda.py)), and normalized processed datasets ([`data/processed/transaction_indicators.csv`](file:///c:/Users/DELL/PAYFLOW/data/processed/transaction_indicators.csv)).
+All findings below are derived from verified database queries ([`sql/05_business_analysis.sql`](file:///c:/Users/DELL/PAYFLOW/sql/05_business_analysis.sql)), automated test assertions ([`tests/test_eda_analysis.py`](file:///c:/Users/DELL/PAYFLOW/tests/test_eda_analysis.py)), and normalized processed datasets ([`data/processed/transaction_indicators.csv`](file:///c:/Users/DELL/PAYFLOW/data/processed/transaction_indicators.csv)).
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────────────────────┐
@@ -309,11 +309,9 @@ By enforcing strict non-destructive ETL standards, building a normalized MySQL S
 
 ### Navigation & Project Artifact Links
 - **Dataset Audit Report:** [`docs/dataset_audit.md`](file:///c:/Users/DELL/PAYFLOW/docs/dataset_audit.md)
-- **Data Cleaning Report:** [`docs/phase2_cleaning_report.md`](file:///c:/Users/DELL/PAYFLOW/docs/phase2_cleaning_report.md)
-- **Data Validation Report:** [`docs/phase2_validation_report.md`](file:///c:/Users/DELL/PAYFLOW/docs/phase2_validation_report.md)
-- **MySQL Database & SQL Report:** [`docs/phase3_database_report.md`](file:///c:/Users/DELL/PAYFLOW/docs/phase3_database_report.md)
-- **Python EDA & Visualizations Report:** [`docs/phase4_eda_report.md`](file:///c:/Users/DELL/PAYFLOW/docs/phase4_eda_report.md)
-- **Exploratory Analysis Notebook:** [`notebooks/phase4_exploratory_data_analysis.ipynb`](file:///c:/Users/DELL/PAYFLOW/notebooks/phase4_exploratory_data_analysis.ipynb)
-- **Visual Artifacts Gallery:** [`visuals/phase4/`](file:///c:/Users/DELL/PAYFLOW/visuals/phase4/)
+- **Master Findings Synthesis:** [`docs/final_findings.md`](file:///c:/Users/DELL/PAYFLOW/docs/final_findings.md)
+- **Exploratory Analysis Notebook:** [`notebooks/exploratory_data_analysis.ipynb`](file:///c:/Users/DELL/PAYFLOW/notebooks/exploratory_data_analysis.ipynb)
+- **Visual Artifacts Gallery:** [`visuals/`](file:///c:/Users/DELL/PAYFLOW/visuals/)
 - **Processed Tabular Datasets:** [`data/processed/`](file:///c:/Users/DELL/PAYFLOW/data/processed/)
+- **Executive Analytics Workbook:** [`excel/PAYFLOW_Analytics_Workbook.xlsx`](file:///c:/Users/DELL/PAYFLOW/excel/PAYFLOW_Analytics_Workbook.xlsx)
 - **Master Project README:** [`README.md`](file:///c:/Users/DELL/PAYFLOW/README.md)

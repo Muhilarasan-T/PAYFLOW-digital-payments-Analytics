@@ -29,6 +29,11 @@ desktop.ini
 # Testing & Cache
 .pytest_cache/
 
+# Database binaries
+*.db
+*.sqlite
+*.sqlite3
+
 # Intermediate scratch files
 *.tmp
 *.bak
